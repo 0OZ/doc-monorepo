@@ -2,10 +2,17 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { Button } from "@/components/ui/button";
-import type { DocumentWithStatus } from "@/types/fhir";
+import type { LeistungsnachweisWithStatus } from "@/types/leistungsnachweis";
+
+// Helper to create document title from billing month
+function getDocumentTitle(billingMonth: string): string {
+	const year = billingMonth.slice(0, 4);
+	const month = billingMonth.slice(4, 6);
+	return `Leistungsnachweis ${month}/${year}`;
+}
 
 interface BatchSignModalProps {
-	documents: DocumentWithStatus[];
+	documents: LeistungsnachweisWithStatus[];
 	selectedIndices: number[];
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
@@ -106,9 +113,11 @@ export function BatchSignModal({
 						<div className="divide-y">
 							{unsignedDocs.map((doc) => {
 								const isSelected = selectedIndices.includes(doc.originalIndex);
+								const title = getDocumentTitle(doc.document.billingMonth);
+								const clientName = `${doc.document.client.vorname} ${doc.document.client.name}`;
 								return (
 									<button
-										key={doc.document.composition.id}
+										key={doc.document.id}
 										type="button"
 										onClick={() => onToggleSelection(doc.originalIndex)}
 										className={`flex w-full items-center gap-3 px-4 py-3 text-left transition-colors sm:px-6 ${
@@ -149,10 +158,10 @@ export function BatchSignModal({
 													isSelected ? "text-primary" : "text-foreground"
 												}`}
 											>
-												{doc.document.composition.title}
+												{title}
 											</p>
 											<p className="truncate text-xs text-muted-foreground">
-												{doc.document.composition.type.display}
+												{clientName}
 											</p>
 										</div>
 

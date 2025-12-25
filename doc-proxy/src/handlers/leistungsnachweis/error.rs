@@ -57,6 +57,10 @@ impl From<LeistungsnachweisError> for StatusCode {
             LeistungsnachweisError::Upstream(_) => StatusCode::BAD_GATEWAY,
             LeistungsnachweisError::Internal(_) => StatusCode::INTERNAL_SERVER_ERROR,
             LeistungsnachweisError::Unauthorized => StatusCode::UNAUTHORIZED,
+            LeistungsnachweisError::InvalidStatusTransition { .. } => StatusCode::CONFLICT,
+            LeistungsnachweisError::ExportFailed(_) => StatusCode::INTERNAL_SERVER_ERROR,
+            LeistungsnachweisError::BatchLimitExceeded { .. } => StatusCode::BAD_REQUEST,
+            LeistungsnachweisError::Conflict(_) => StatusCode::CONFLICT,
         }
     }
 }

@@ -1,0 +1,51 @@
+services:
+    opz_db:
+        image: postgres:18-alpine
+        environment:
+            POSTGRES_PASSWORD: password
+            POSTGRES_USER: postgres
+            POSTGRES_DB: doc_proxy
+        ports:
+            - "127.0.0.1:9132:5432"
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U postgres"]
+            interval: 5s
+            timeout: 5s
+            retries: 5
+
+    backend:
+        build:
+            context: ./doc-proxy
+            dockerfile: Dockerfile
+        ports:
+            - "127.0.0.1:2501:3000"
+        environment:
+            DATABASE_URL: postgres://postgres:password@opz_db:5432/doc_proxy
+        depends_on:
+            opz_db:
+                condition: service_healthy
+        networks:
+            - shared_ng
+
+    frontend:
+        build:
+            context: ./doc-web-view
+            dockerfile: Dockerfile
+        ports:
+            - "127.0.0.1:31001:3000"
+        environment:
+            NEXT_PUBLIC_API_URL: http://backend:3000
+        networks:
+            - shared_ng
+        depends_on:
+            - backend
+
+volumes:
+    postgres_data:
+
+networks:
+    shared_ng:
+        name: shared_ng
+        external: true

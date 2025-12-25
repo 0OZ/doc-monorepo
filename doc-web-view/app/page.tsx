@@ -12,8 +12,12 @@ export default function Home() {
 		return <LoadingState />;
 	}
 
-	if (error || loadedDocuments.length === 0) {
+	if (error) {
 		return <ErrorState error={error} />;
+	}
+
+	if (loadedDocuments.length === 0) {
+		return <ErrorState error="Keine Dokumente gefunden" />;
 	}
 
 	return <DocumentSigningPage initialDocuments={loadedDocuments} />;

@@ -28,8 +28,9 @@ async fn main() {
 
     let app = init_routes(state).layer(CorsLayer::permissive());
 
-    let port = std::env::var("PORT").unwrap_or_else(|_| "3212".to_string());
-    let address = format!("127.0.0.1:{}", port);
+    let port = std::env::var("PORT").unwrap_or_else(|_| "3000".to_string());
+    let host = std::env::var("HOST").unwrap_or_else(|_| "0.0.0.0".to_string());
+    let address = format!("{}:{}", host, port);
 
     let listener = tokio::net::TcpListener::bind(&address)
         .await

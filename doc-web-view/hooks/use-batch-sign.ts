@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import type { DocumentWithStatus } from "@/types/fhir";
+import type { LeistungsnachweisWithStatus } from "@/types/leistungsnachweis";
 
 export interface BatchSignProgress {
 	current: number;
@@ -7,8 +7,15 @@ export interface BatchSignProgress {
 	currentDocumentTitle: string;
 }
 
+// Helper to create document title from billing month
+function getDocumentTitle(billingMonth: string): string {
+	const year = billingMonth.slice(0, 4);
+	const month = billingMonth.slice(4, 6);
+	return `Leistungsnachweis ${month}/${year}`;
+}
+
 export function useBatchSign(
-	documents: DocumentWithStatus[],
+	documents: LeistungsnachweisWithStatus[],
 	onSignDocument: (index: number) => void,
 ) {
 	const [batchModalOpen, setBatchModalOpen] = useState(false);
@@ -48,12 +55,14 @@ export function useBatchSign(
 	const startBatchSigning = useCallback(() => {
 		if (selectedIndices.length === 0) return;
 
+		const firstDoc = documents[selectedIndices[0]]?.document;
 		setIsBatchMode(true);
 		setBatchProgress({
 			current: 1,
 			total: selectedIndices.length,
-			currentDocumentTitle:
-				documents[selectedIndices[0]]?.document.composition.title || "",
+			currentDocumentTitle: firstDoc
+				? getDocumentTitle(firstDoc.billingMonth)
+				: "",
 		});
 		setBatchModalOpen(false);
 
@@ -78,11 +87,13 @@ export function useBatchSign(
 
 		// Move to next document
 		const nextDocIndex = selectedIndices[nextBatchIndex];
+		const nextDoc = documents[nextDocIndex]?.document;
 		setBatchProgress({
 			current: nextBatchIndex + 1,
 			total: selectedIndices.length,
-			currentDocumentTitle:
-				documents[nextDocIndex]?.document.composition.title || "",
+			currentDocumentTitle: nextDoc
+				? getDocumentTitle(nextDoc.billingMonth)
+				: "",
 		});
 
 		// Navigate to next document

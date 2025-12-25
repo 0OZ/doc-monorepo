@@ -5,15 +5,15 @@ import { DocumentHeader } from "@/components/document-page/document-header";
 import { DocumentNavigation } from "@/components/document-page/document-navigation";
 import { FloatingSignButton } from "@/components/document-page/floating-sign-button";
 import { SuccessBanner } from "@/components/document-page/success-banner";
-import { DocumentViewer } from "@/components/document-viewer";
+import { LeistungsnachweisViewer } from "@/components/leistungsnachweis-viewer";
 import { SignatureModal } from "@/components/signature-modal";
 import { BatchSignModal } from "@/components/batch-sign-modal";
 import { useMultiDocumentHandler } from "@/hooks/use-multi-document-handler";
 import { useBatchSign } from "@/hooks/use-batch-sign";
-import type { ParsedDocument } from "@/types/fhir";
+import type { LeistungsnachweisDetail } from "@/types/leistungsnachweis";
 
 interface DocumentSigningPageProps {
-	initialDocuments: ParsedDocument[];
+	initialDocuments: LeistungsnachweisDetail[];
 }
 
 export function DocumentSigningPage({ initialDocuments }: DocumentSigningPageProps) {
@@ -46,7 +46,16 @@ export function DocumentSigningPage({ initialDocuments }: DocumentSigningPagePro
 	const remainingCount = totalCount - signedCount;
 
 	// Get all document IDs for export
-	const allDocumentIds = documents.map((d) => d.document.composition.id);
+	const allDocumentIds = documents.map((d) => d.document.id);
+
+	// Helper to create document title from Leistungsnachweis
+	const getDocumentTitle = (doc: LeistungsnachweisDetail | null) => {
+		if (!doc) return undefined;
+		const month = doc.billingMonth;
+		const year = month.slice(0, 4);
+		const monthNum = month.slice(4, 6);
+		return `Leistungsnachweis ${monthNum}/${year}`;
+	};
 
 	// Handle signature submission with batch mode support
 	const handleSignatureSubmitWithBatch = useCallback(
@@ -64,6 +73,8 @@ export function DocumentSigningPage({ initialDocuments }: DocumentSigningPagePro
 		[handleSignatureSubmit, batchSign],
 	);
 
+	const documentTitle = getDocumentTitle(currentDocument);
+
 	return (
 		<div className="min-h-screen bg-background pb-[calc(6rem+env(safe-area-inset-bottom))] sm:pb-8">
 			<DocumentHeader
@@ -72,8 +83,8 @@ export function DocumentSigningPage({ initialDocuments }: DocumentSigningPagePro
 				currentDocument={currentIndex + 1}
 				totalDocuments={totalCount}
 				signedCount={signedCount}
-				documentId={currentDocument?.composition.id}
-				documentTitle={currentDocument?.composition.title}
+				documentId={currentDocument?.id}
+				documentTitle={documentTitle}
 				allDocumentIds={allDocumentIds}
 				onBatchSignClick={batchSign.openBatchModal}
 				unsignedCount={batchSign.unsignedCount}
@@ -96,7 +107,9 @@ export function DocumentSigningPage({ initialDocuments }: DocumentSigningPagePro
 				/>
 
 				{/* Current Document Viewer */}
-				{currentDocument && <DocumentViewer document={currentDocument} />}
+				{currentDocument && (
+					<LeistungsnachweisViewer document={currentDocument} />
+				)}
 
 				{/* Floating Sign Button (mobile only, when not all signed) */}
 				{!allSigned && !currentDocSigned && (
@@ -112,7 +125,7 @@ export function DocumentSigningPage({ initialDocuments }: DocumentSigningPagePro
 				open={signatureModalOpen}
 				onOpenChange={setSignatureModalOpen}
 				onSignatureSubmit={handleSignatureSubmitWithBatch}
-				documentTitle={currentDocument?.composition.title}
+				documentTitle={documentTitle}
 				isSubmitting={isSubmitting}
 				currentIndex={
 					batchSign.isBatchMode && batchSign.batchProgress

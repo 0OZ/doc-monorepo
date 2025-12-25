@@ -1,10 +1,17 @@
 "use client";
 
 import { motion } from "motion/react";
-import type { DocumentWithStatus } from "@/types/fhir";
+import type { LeistungsnachweisWithStatus } from "@/types/leistungsnachweis";
+
+// Helper to create document title from billing month
+function getDocumentTitle(billingMonth: string): string {
+	const year = billingMonth.slice(0, 4);
+	const month = billingMonth.slice(4, 6);
+	return `Leistungsnachweis ${month}/${year}`;
+}
 
 interface DocumentNavigationProps {
-	documents: DocumentWithStatus[];
+	documents: LeistungsnachweisWithStatus[];
 	currentIndex: number;
 	onNavigate: (index: number) => void;
 }
@@ -29,7 +36,7 @@ export function DocumentNavigation({
 						<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
 					</svg>
 					<span className="text-sm font-medium text-foreground">
-						Dokumente zur Unterschrift
+						Leistungsnachweise zur Unterschrift
 					</span>
 				</div>
 				<span className="rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-medium text-primary">
@@ -42,10 +49,12 @@ export function DocumentNavigation({
 				{documents.map((doc, index) => {
 					const isActive = index === currentIndex;
 					const isSigned = doc.signed;
+					const title = getDocumentTitle(doc.document.billingMonth);
+					const clientName = `${doc.document.client.vorname} ${doc.document.client.name}`;
 
 					return (
 						<button
-							key={doc.document.composition.id}
+							key={doc.document.id}
 							type="button"
 							onClick={() => onNavigate(index)}
 							className={`
@@ -57,10 +66,10 @@ export function DocumentNavigation({
 							{/* Status Icon */}
 							<div className={`
 								flex h-8 w-8 shrink-0 items-center justify-center rounded-full
-								${isSigned 
-									? 'bg-emerald-100 text-emerald-600' 
-									: isActive 
-										? 'bg-primary/10 text-primary' 
+								${isSigned
+									? 'bg-emerald-100 text-emerald-600'
+									: isActive
+										? 'bg-primary/10 text-primary'
 										: 'bg-muted text-muted-foreground'
 								}
 							`}>
@@ -76,10 +85,10 @@ export function DocumentNavigation({
 							{/* Document Info */}
 							<div className="min-w-0 flex-1">
 								<p className={`truncate text-sm font-medium ${isActive ? 'text-primary' : 'text-foreground'}`}>
-									{doc.document.composition.title}
+									{title}
 								</p>
 								<p className="truncate text-xs text-muted-foreground">
-									{doc.document.composition.type.display}
+									{clientName}
 								</p>
 							</div>
 
@@ -103,5 +112,4 @@ export function DocumentNavigation({
 		</motion.div>
 	);
 }
-
 

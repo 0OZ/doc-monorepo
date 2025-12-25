@@ -3,12 +3,14 @@
 use reqwest::{Client, StatusCode};
 use serde::{de::DeserializeOwned, Serialize};
 use thiserror::Error;
+use tracing::info;
 
 use crate::handlers::leistungsnachweis::{
     request::SignLeistungsnachweisRequest,
     response::{LeistungsnachweisDetail, LeistungsnachweisListItem, SignedDocumentResponse},
 };
 use crate::models::pagination::PageResult;
+use super::mock_data;
 
 #[derive(Error, Debug)]
 pub enum CoreClientError {
@@ -26,36 +28,53 @@ pub enum CoreClientError {
 }
 
 /// Client for communicating with the core server.
+/// Supports mock mode for development without a real backend.
 #[derive(Clone)]
 pub struct CoreClient {
     client: Client,
     base_url: String,
     api_token: String,
+    mock_mode: bool,
 }
 
 impl CoreClient {
     /// Creates a new CoreClient from environment variables.
     ///
-    /// Required env vars:
+    /// Env vars:
+    /// - `MOCK_MODE`: Set to "true" to enable mock data (default: true for development)
     /// - `CORE_API_URL`: Base URL of the core server (e.g., "http://localhost:8081")
     /// - `CORE_API_TOKEN`: Service token for authentication
     pub fn from_env() -> Self {
+        let mock_mode = std::env::var("MOCK_MODE")
+            .map(|v| v.to_lowercase() == "true" || v == "1")
+            .unwrap_or(true); // Default to mock mode
+
+        if mock_mode {
+            info!("CoreClient running in MOCK MODE - using sample data");
+        }
+
         let base_url = std::env::var("CORE_API_URL")
             .unwrap_or_else(|_| "http://localhost:8081".to_string());
         let api_token =
             std::env::var("CORE_API_TOKEN").unwrap_or_else(|_| "dev-service-token".to_string());
 
-        Self::new(base_url, api_token)
+        Self::new(base_url, api_token, mock_mode)
     }
 
     /// Creates a new CoreClient with explicit configuration.
-    pub fn new(base_url: String, api_token: String) -> Self {
+    pub fn new(base_url: String, api_token: String, mock_mode: bool) -> Self {
         let client = Client::new();
         Self {
             client,
             base_url: base_url.trim_end_matches('/').to_string(),
             api_token,
+            mock_mode,
         }
+    }
+
+    /// Returns true if running in mock mode.
+    pub fn is_mock(&self) -> bool {
+        self.mock_mode
     }
 
     /// Fetches a paginated list of Leistungsnachweise for a client.
@@ -65,6 +84,10 @@ impl CoreClient {
         page: u64,
         size: u64,
     ) -> Result<PageResult<LeistungsnachweisListItem>, CoreClientError> {
+        if self.mock_mode {
+            return Ok(mock_data::mock_list(client_id, page, size));
+        }
+
         let url = format!(
             "{}/api/leistungsnachweise?clientId={}&page={}&size={}",
             self.base_url, client_id, page, size
@@ -78,6 +101,10 @@ impl CoreClient {
         &self,
         id: &str,
     ) -> Result<LeistungsnachweisDetail, CoreClientError> {
+        if self.mock_mode {
+            return mock_data::mock_detail(id).ok_or(CoreClientError::NotFound);
+        }
+
         let url = format!("{}/api/leistungsnachweise/{}", self.base_url, id);
 
         self.get(&url).await
@@ -88,11 +115,16 @@ impl CoreClient {
     pub async fn sign_leistungsnachweis(
         &self,
         id: &str,
-        request: &SignLeistungsnachweisRequest,
+        _request: &SignLeistungsnachweisRequest,
     ) -> Result<SignedDocumentResponse, CoreClientError> {
+        if self.mock_mode {
+            // In mock mode, just return success
+            return Ok(mock_data::mock_sign_response(id));
+        }
+
         let url = format!("{}/api/leistungsnachweise/{}/sign", self.base_url, id);
 
-        self.post(&url, request).await
+        self.post(&url, _request).await
     }
 
     /// Generic GET request with authentication.

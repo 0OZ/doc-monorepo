@@ -1,16 +1,28 @@
 import { useCallback, useState } from "react";
-import {
-	createSignaturePayload,
-	isValidSignatureData,
-	submitSignature,
-} from "@/lib/signature-service";
-import type { DocumentWithStatus, ParsedDocument } from "@/types/fhir";
+import { signLeistungsnachweis, createSignRequest } from "@/lib/api";
+import type {
+	LeistungsnachweisDetail,
+	LeistungsnachweisWithStatus,
+} from "@/types/leistungsnachweis";
 
-export function useMultiDocumentHandler(initialDocuments: ParsedDocument[]) {
-	const [documents, setDocuments] = useState<DocumentWithStatus[]>(
+/**
+ * Validates that signature data is non-empty and correctly formatted
+ */
+function isValidSignatureData(dataUrl: string): boolean {
+	if (!dataUrl) return false;
+	const pngPrefix = "data:image/png;base64,";
+	if (!dataUrl.startsWith(pngPrefix)) return false;
+	const base64Data = dataUrl.slice(pngPrefix.length);
+	return base64Data.length > 2000; // Non-empty canvas check
+}
+
+export function useMultiDocumentHandler(
+	initialDocuments: LeistungsnachweisDetail[]
+) {
+	const [documents, setDocuments] = useState<LeistungsnachweisWithStatus[]>(
 		initialDocuments.map((doc) => ({
 			document: doc,
-			signed: false,
+			signed: doc.status === "signed" || doc.status === "finalized",
 		}))
 	);
 	const [currentIndex, setCurrentIndex] = useState(0);
@@ -32,18 +44,14 @@ export function useMultiDocumentHandler(initialDocuments: ParsedDocument[]) {
 			setIsSubmitting(true);
 
 			try {
-				const payload = createSignaturePayload(
-					currentDocument.composition.id,
-					signatureDataUrl,
-					currentDocument.patient.name,
-					"patient"
+				// Create sign request matching backend format
+				const request = createSignRequest(signatureDataUrl);
+
+				// Submit to backend
+				const response = await signLeistungsnachweis(
+					currentDocument.id,
+					request
 				);
-
-				const response = await submitSignature(payload);
-
-				if (!response.success) {
-					throw new Error(response.error || "Failed to submit signature");
-				}
 
 				// Mark current document as signed
 				setDocuments((prev) =>
@@ -52,8 +60,8 @@ export function useMultiDocumentHandler(initialDocuments: ParsedDocument[]) {
 							? {
 									...d,
 									signed: true,
-									signatureId: response.signatureId,
-									signedAt: new Date().toISOString(),
+									signatureId: response.id,
+									signedAt: response.signedAt || new Date().toISOString(),
 								}
 							: d
 					)
@@ -78,14 +86,19 @@ export function useMultiDocumentHandler(initialDocuments: ParsedDocument[]) {
 		[currentDocument, currentIndex, documents]
 	);
 
-	const goToDocument = useCallback((index: number) => {
-		if (index >= 0 && index < documents.length) {
-			setCurrentIndex(index);
-		}
-	}, [documents.length]);
+	const goToDocument = useCallback(
+		(index: number) => {
+			if (index >= 0 && index < documents.length) {
+				setCurrentIndex(index);
+			}
+		},
+		[documents.length]
+	);
 
 	const goToNextUnsigned = useCallback(() => {
-		const nextUnsignedIndex = documents.findIndex((d, i) => i > currentIndex && !d.signed);
+		const nextUnsignedIndex = documents.findIndex(
+			(d, i) => i > currentIndex && !d.signed
+		);
 		if (nextUnsignedIndex !== -1) {
 			setCurrentIndex(nextUnsignedIndex);
 		} else {
@@ -127,5 +140,3 @@ export function useMultiDocumentHandler(initialDocuments: ParsedDocument[]) {
 		goToNext,
 	};
 }
-
-
