@@ -1,102 +1,42 @@
 # Integration TODO
 
-## Critical Issues
+## Completed
 
-### 1. Frontend-Backend Disconnected
-**Status**: Not integrated
-**Priority**: High
+### 1. Frontend-Backend Connected
+**Status**: DONE
 
-The frontend (`doc-web-view`) and backend (`doc-proxy`) are not connected:
-- Frontend reads from local `/data/*.xml` files
-- Frontend submits signatures to placeholder `/api/signature` (local Next.js route)
-- Backend expects to proxy requests to a core server
+- [x] Connect frontend to backend API at `http://backend:3000` (Docker) or `http://localhost:3001` (local)
+- [x] Update `useDocumentLoader` hook to fetch from proxy API
+- [x] Created `lib/api.ts` for backend communication
+- [x] Frontend now uses `NEXT_PUBLIC_API_URL` environment variable
 
-**Tasks**:
-- [ ] Connect frontend to backend API at `http://backend:3000` (Docker) or `http://localhost:3001` (local)
-- [ ] Update `useDocumentLoader` hook to fetch from proxy API
-- [ ] Update `signature-service.ts` to POST to proxy sign endpoint
-- [ ] Remove or repurpose local mock API routes
+### 2. Data Model Unified
+**Status**: DONE
 
-### 2. Data Model Mismatch
-**Status**: Incompatible schemas
-**Priority**: High
+- [x] Created `types/leistungsnachweis.ts` with full Leistungsnachweis types
+- [x] Updated all frontend components to use Leistungsnachweis structure
+- [x] Created `LeistungsnachweisViewer` component to display service records
+- [x] Updated hooks: `use-document-loader`, `use-multi-document-handler`, `use-batch-sign`
+- [x] Updated components: `document-signing-page`, `batch-sign-modal`, `document-navigation`
 
-Frontend uses **FHIR Composition** structure:
-```typescript
-interface ParsedDocument {
-  composition: FHIRComposition;
-  patient: FHIRPatient;
-  practitioner: FHIRPractitioner;
-  sections: FHIRSection[];
-}
-```
+### 3. Mock Mode Implemented
+**Status**: DONE
 
-Backend returns **Leistungsnachweis** structure:
-```typescript
-interface LeistungsnachweisDetail {
-  id: string;
-  client: { versichertennummer, name, vorname };
-  provider: { ik, responsible_staff_id };
-  billing_month: string;
-  service_days: ServiceDayResponse[];
-  signature: SignatureInfo;
-}
-```
+- [x] Added `MOCK_MODE` environment variable to doc-proxy (defaults to true)
+- [x] Created `services/mock_data.rs` with sample Leistungsnachweise
+- [x] Mock mode returns sample client data without needing core server
 
-**Tasks**:
-- [ ] Decide on unified data model (FHIR or Leistungsnachweis)
-- [ ] Create adapter/transformer layer if both needed
-- [ ] Update frontend types to match backend response
-- [ ] Update frontend components to render Leistungsnachweis data
+### 4. Signature Payload Fixed
+**Status**: DONE
 
-### 3. Missing Core Server
-**Status**: Not implemented
-**Priority**: High
+- [x] Created `createSignRequest()` helper in `lib/api.ts`
+- [x] Strips `data:image/png;base64,` prefix automatically
+- [x] Maps to backend `SignLeistungsnachweisRequest` format
+- [x] Defaults to `handwritten_digital` signature type
 
-The proxy expects to communicate with an upstream core server:
-- `CORE_API_URL` environment variable
-- `CORE_API_TOKEN` for service authentication
-- Endpoints: `/api/leistungsnachweise`, `/api/leistungsnachweise/{id}`, `/api/leistungsnachweise/{id}/sign`
+---
 
-**Tasks**:
-- [ ] Implement mock core server for development
-- [ ] Or implement local data storage in proxy (bypass core server mode)
-- [ ] Document core server API contract
-
-### 4. Signature Payload Format
-**Status**: Mismatch
-**Priority**: Medium
-
-Frontend sends:
-```typescript
-interface SignaturePayload {
-  documentId: string;
-  signatureImage: string;  // data:image/png;base64,...
-  timestamp: string;
-  signerName?: string;
-  signerRole?: "patient" | "guardian" | "witness" | "provider";
-}
-```
-
-Backend expects:
-```typescript
-interface SignLeistungsnachweisRequest {
-  signature_type: "handwritten_digital" | "handwritten_paper" |
-                  "photo_confirmation" | "alternative_confirmation" | "missing";
-  signature?: {
-    data: string;     // base64 without prefix
-    format: "png" | "jpeg" | "svg" | "gif" | "tiff" | "pdf";
-  };
-  missing_reason?: "unable_to_sign" | "refused" | "not_present" | "other";
-  missing_explanation?: string;
-}
-```
-
-**Tasks**:
-- [ ] Update frontend signature submission to match backend format
-- [ ] Strip `data:image/png;base64,` prefix before sending
-- [ ] Add signature type selection UI (currently hardcoded as handwritten digital)
-- [ ] Add missing signature flow with reason selection
+## Remaining Tasks
 
 ---
 
@@ -130,16 +70,12 @@ PostgreSQL is configured but the proxy currently:
 - [ ] Implement repository methods
 
 ### 7. Port Configuration
-**Status**: Inconsistent
+**Status**: FIXED
 **Priority**: Low
 
-- Dockerfile exposes 3000
-- main.rs defaults to 3212
-- docker-compose maps 3001:3000
-
-**Tasks**:
-- [ ] Standardize port configuration
-- [ ] Use PORT env var consistently
+- [x] Updated main.rs to default to port 3000 and bind to 0.0.0.0
+- [x] Dockerfile exposes 3000
+- [x] docker-compose maps 3001:3000 (backend accessible at localhost:3001)
 
 ---
 
@@ -161,7 +97,7 @@ Validate generated XML against XSD schema before returning.
 
 ## Quick Wins
 
-1. **Fix proxy port**: Update `main.rs` to bind to `0.0.0.0:3000` for Docker compatibility
-2. **Add health check to frontend**: `GET /api/health` endpoint
-3. **Environment file**: Create `.env.example` with all required variables
-4. **CORS**: Verify CORS is properly configured for frontend origin
+1. ~~**Fix proxy port**: Update `main.rs` to bind to `0.0.0.0:3000` for Docker compatibility~~ DONE
+2. [ ] **Add health check to frontend**: `GET /api/health` endpoint
+3. ~~**Environment file**: Create `.env.example` with all required variables~~ DONE
+4. [ ] **CORS**: Verify CORS is properly configured for frontend origin
