@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- bearbeitet mit XMLSpy v2025 (x64) (https://www.altova.com) von GKV-Spitzenverband (GKV-Spitzenverband) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.gkv-datenaustausch.de/XMLSchema/HKP_ARN/1.0" xmlns:bas="http://www.gkv-datenaustausch.de/XMLSchema/HKP_BAS/1.0" xmlns:arf="http://www.gkv-datenaustausch.de/XMLSchema/HKP_ARF/1.0" xmlns:slpbas="http://www.gkv-datenaustausch.de/XMLSchema/SLP_BAS/1.0" targetNamespace="http://www.gkv-datenaustausch.de/XMLSchema/HKP_ARN/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.gkv-datenaustausch.de/XMLSchema/SLP_BAS/1.0" schemaLocation="SLP_BAS_1.0.0.xsd"/>
+	<xs:import namespace="http://www.gkv-datenaustausch.de/XMLSchema/HKP_BAS/1.0" schemaLocation="HKP_BAS_1.0.0.xsd"/>
+	<xs:import namespace="http://www.gkv-datenaustausch.de/XMLSchema/HKP_ARF/1.0" schemaLocation="HKP_ARF_1.0.0.xsd"/>
+	<xs:complexType name="Abrechnungsnachricht_Ctp">
+		<xs:annotation>
+			<xs:documentation>Beinhaltet alle Informationen die für eine Abrechnung notwendig sind.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Leistungserbringer_IK" type="slpbas:Institutionskennzeichen_Stp">
+				<xs:annotation>
+					<xs:documentation>IK des Pflegedienstes, der die Leistungen erbracht hat</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Rechnungssteller_IK" type="slpbas:Institutionskennzeichen_Stp">
+				<xs:annotation>
+					<xs:documentation>IK des Rechnungsstellers. Kann, aber muss nicht gleich Leistungserbringer sein.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Zahlungsempfaenger_IK" type="slpbas:Institutionskennzeichen_Stp">
+				<xs:annotation>
+					<xs:documentation>IK des Empfängers der Zahlung. Kann, aber muss nicht gleich Rechnungsteller sein.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Rechnungsempfaenger_IK" type="slpbas:Institutionskennzeichen_Stp">
+				<xs:annotation>
+					<xs:documentation>Abrechnungsdienstleister der Krankenkasse. Kann auch die Kasse selber sein.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Kostentraeger_IK" type="slpbas:Institutionskennzeichen_Stp">
+				<xs:annotation>
+					<xs:documentation>Einzutragen ist das IK des Kostenträgers (Institution, welche die Rechnung begleicht) lt. eVO.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Verarbeitungskennzeichen" type="bas:Verarbeitungskennzeichen_Stp">
+				<xs:annotation>
+					<xs:documentation>Kennzeichen für die Weiterverarbeitung der Nachricht</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Vorgaengerrechnung_Datei_ID" type="slpbas:UUID_Stp" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Bezug auf die zuvor versandte Rechnung.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Rechnungsnummer" type="slpbas:Rechnungsnummer_Stp">
+				<xs:annotation>
+					<xs:documentation>Einzutragen ist die Rechnungsnummer, die der Rechnungssteller vergibt. Diese Rechnungsnummer muss eindeutig sein (je Rechnungs-Erstellungsjahr und je IK des Rechnungsstellers)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Abrechnung_ID" type="slpbas:UUID_Stp">
+				<xs:annotation>
+					<xs:documentation>Universally Unique IDentifier; https://datatracker.ietf.org/doc/html/rfc4122</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Rechnungsdatum" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>Erstelldatum der Rechnung</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Gesamtbetrag" type="slpbas:Betrag_Stp">
+				<xs:annotation>
+					<xs:documentation>Gesamtrechnungsbetrag (inkl. gesetzl. Zuzahlungsbetrag und/oder Eigenanteil des Versicherten)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Abrechnungsfall" type="arf:Abrechnungsfall_Ctp" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- bearbeitet mit XMLSpy v2025 (x64) (https://www.altova.com) von Frank Trumpfheller (GKV-Spitzenverband) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.gkv-datenaustausch.de/XMLSchema/HKP_BAS/1.0" targetNamespace="http://www.gkv-datenaustausch.de/XMLSchema/HKP_BAS/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:simpleType name="Art_Unterschrift_Stp">
+		<xs:annotation>
+			<xs:documentation>Kennzeichen zur Art der Unterschrift</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+			<xs:pattern value="[1-5]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Dateityp_Stp">
+		<xs:annotation>
+			<xs:documentation>Kennzeichen Dateityp</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+			<xs:pattern value="[1-5]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Diagnoseschluessel_Stp">
+		<xs:annotation>
+			<xs:documentation>Falls auf der Verordnung ein ICD-10- GM-Code als Diagnoseschlüssel aufgebracht ist, ist dieser zwingend anzugeben. Es ist nicht der Indikationsschlüssel anzugeben.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="12"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DienstkennungHKP_Stp">
+		<xs:annotation>
+			<xs:documentation>KIM-Dienstkennung: Unterverfahren, Nachrichtentyp und log. Version (durch Semikolon getrennt)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="HKP;(ABR|FEH);\d\.\d\.\d"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Fehlercode_Stp">
+		<xs:annotation>
+			<xs:documentation>Fehlercode zur Fehlernachricht</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="5"/>
+			<xs:enumeration value="00000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="eVO_stp">
+		<xs:annotation>
+			<xs:documentation>Eindeutige ID der elektronischen Verordnung Für eine eindeutige Zuordnung der Verordnung zum Abrechnungsfall</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:minLength value="22"/>
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Genehmigungskennzeichen_stp">
+		<xs:annotation>
+			<xs:documentation>Hier ist die durch die Krankenkasse bei der Kostenzusage vergebene Genehmigungsnummer oder das Aktenzeichen einzutragen.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Grund_fehlende_Unterschrift_Stp">
+		<xs:annotation>
+			<xs:documentation>Kennzeichen für den Grund des fehlens der Unterschrift des Versicherten</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+			<xs:pattern value="[1-4]"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Kennzeichen_Besondere_Versorgungsform_stp">
+		<xs:annotation>
+			<xs:documentation>Vertragskennzeichen für besondere Versorgungsformen</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:maxLength value="25"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Kennzeichen_BVG_Sonstiges_SER_Stp">
+		<xs:annotation>
+			<xs:documentation>Schlüssel BVG/SER Anlage 3 Abschnitt 8.1.2.1</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:length value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LE_Abrechungscode_stp">
+		<xs:annotation>
+			<xs:documentation>Alphanumerisch mit zwei Stellen</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:length value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Nachrichtentyp_Stp">
+		<xs:annotation>
+			<xs:documentation>Nachrichtentypkennung</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="8"/>
+			<xs:enumeration value="ABR_0000"/>
+			<xs:enumeration value="FEH_TECH"/>
+			<xs:enumeration value="FEH_FACH"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Unfallkennzeichen_Stp">
+		<xs:annotation>
+			<xs:documentation>Schlüssel Unfall/Sonstiges Anlage 3 Abschnitt 8.1.2</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:length value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Verarbeitungskennzeichen_Stp">
+		<xs:annotation>
+			<xs:documentation>Kennzeichen für die Weiterverarbeitung der Nachricht anhand Art der Rechnung.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="2"/>
+			<xs:enumeration value="01">
+				<xs:annotation>
+					<xs:documentation>Abrechnung ohne Besonderheiten</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="02">
+				<xs:annotation>
+					<xs:documentation>Nachforderung</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="03">
+				<xs:annotation>
+					<xs:documentation>Zuzahlungsforderung</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="04">
+				<xs:annotation>
+					<xs:documentation>Korrekturrechnung</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="10">
+				<xs:annotation>
+					<xs:documentation>Wiederaufnahme</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Tarifkennzeichen_Bereich_stp">
+		<xs:annotation>
+			<xs:documentation>Alphanumerisch mit zwei Stellen und Erhalt von führenden Nullen</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:length value="2"/>
+			<xs:pattern value="\d{2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Tarifkennzeichen_Sonder_stp">
+		<xs:annotation>
+			<xs:documentation>Alphanumerisch mit drei Stellen.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:length value="3"/>
+		</xs:restriction>
+		<!--  TODO wenn Buchstaben dann nur Großbuchstaben -->
+	</xs:simpleType>
+	<xs:simpleType name="Positionsnummer_6stellig_stp">
+		<xs:annotation>
+			<xs:documentation>Alphanumerisch mit sechs Stellen.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:length value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="Position_Menge_Stp">
+		<xs:annotation>
+			<xs:documentation>Anzahl der Abrechnungspositionen: zwingend anzugeben bei Zeitvergütung.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal">
+			<xs:fractionDigits value="2"/>
+			<xs:totalDigits value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UnterverfahrenHKP_Stp">
+		<xs:annotation>
+			<xs:documentation>Bezeichnung des Verfahrens gemäß Dienstkennung</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="3"/>
+			<xs:enumeration value="HKP"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VerfahrenskennungHKP_Stp">
+		<xs:annotation>
+			<xs:documentation>Verfahrenskennung (Transportweg), „THKP0“ für Testdaten oder „EHKP0“ für Echtdaten</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:length value="5"/>
+			<xs:enumeration value="EHKP0"/>
+			<xs:enumeration value="THKP0"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

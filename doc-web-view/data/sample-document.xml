@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle xmlns="http://hl7.org/fhir">
+  <id value="klinische-notiz-bundle"/>
+  <type value="document"/>
+  <timestamp value="2024-01-15T14:30:00Z"/>
+  
+  <entry>
+    <resource>
+      <Composition xmlns="http://hl7.org/fhir">
+        <id value="composition-001"/>
+        <status value="final"/>
+        <type>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="11488-4"/>
+            <display value="Konsultationsbericht"/>
+          </coding>
+        </type>
+        <title value="Konsultationsbericht - Erstuntersuchung"/>
+        <date value="2024-01-15T14:30:00Z"/>
+        <confidentiality value="N"/>
+        
+        <section>
+          <title value="Hauptbeschwerde"/>
+          <code>
+            <coding>
+              <system value="http://loinc.org"/>
+              <code value="10154-3"/>
+              <display value="Hauptbeschwerde"/>
+            </coding>
+          </code>
+          <text>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p>Patient stellt sich mit anhaltenden Rückenschmerzen im Lendenbereich seit 3 Wochen vor, Schmerzintensität 6/10. Die Schmerzen verschlimmern sich bei längerem Sitzen und bessern sich durch Ruhe und Wärmeanwendung.</p>
+            </div>
+          </text>
+        </section>
+        
+        <section>
+          <title value="Aktuelle Anamnese"/>
+          <code>
+            <coding>
+              <system value="http://loinc.org"/>
+              <code value="10164-2"/>
+              <display value="Aktuelle Anamnese"/>
+            </coding>
+          </code>
+          <text>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p>Der Patient berichtet über Rückenschmerzen im Lendenbereich, die vor etwa 3 Wochen nach einem Umzug begonnen haben. Anfänglich leicht, haben sich die Schmerzen in der letzten Woche zunehmend verschlimmert.</p>
+              <p><strong>Begleitsymptome:</strong></p>
+              <ul>
+                <li>Morgensteifigkeit, die etwa 30 Minuten anhält</li>
+                <li>Gelegentliche Ausstrahlung in das linke Gesäß</li>
+                <li>Kein Taubheitsgefühl oder Kribbeln in den Extremitäten</li>
+                <li>Keine Blasen- oder Darmfunktionsstörungen</li>
+              </ul>
+              <p><strong>Lindernde Faktoren:</strong> Ruhe, Wärmeanwendung, rezeptfreies Ibuprofen</p>
+              <p><strong>Verschlimmernde Faktoren:</strong> Längeres Sitzen, Vorwärtsbeugen, Heben</p>
+            </div>
+          </text>
+        </section>
+        
+        <section>
+          <title value="Körperliche Untersuchung"/>
+          <code>
+            <coding>
+              <system value="http://loinc.org"/>
+              <code value="29545-1"/>
+              <display value="Körperliche Befunde"/>
+            </coding>
+          </code>
+          <text>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p><strong>Vitalzeichen:</strong></p>
+              <ul>
+                <li>Blutdruck: 128/82 mmHg</li>
+                <li>Herzfrequenz: 76/min</li>
+                <li>Temperatur: 36,9°C</li>
+                <li>Atemfrequenz: 16/min</li>
+              </ul>
+              <p><strong>Muskuloskelettale Untersuchung:</strong></p>
+              <ul>
+                <li>Inspektion: Normale Wirbelsäulenkrümmung, keine sichtbare Deformität</li>
+                <li>Palpation: Druckschmerz über L4-L5 paraspinale Muskulatur beidseits</li>
+                <li>Bewegungsumfang: Eingeschränkte Lendenflexion (Fingerspitzen bis Mitte Schienbein), Extension und Seitneigung im Normbereich</li>
+                <li>Lasègue-Zeichen: Negativ beidseits</li>
+                <li>Neurologisch: Kraft 5/5 in beiden unteren Extremitäten, Sensibilität intakt, Patellarsehnenreflex und Achillessehnenreflex 2+ beidseits</li>
+              </ul>
+            </div>
+          </text>
+        </section>
+        
+        <section>
+          <title value="Beurteilung und Therapieplan"/>
+          <code>
+            <coding>
+              <system value="http://loinc.org"/>
+              <code value="51847-2"/>
+              <display value="Beurteilung und Plan"/>
+            </coding>
+          </code>
+          <text>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p><strong>Beurteilung:</strong></p>
+              <p>Akute mechanische Lumbalgie, wahrscheinlich muskuloligamentäre Zerrung nach Hebetrauma. Keine Warnzeichen für schwerwiegende Grunderkrankung.</p>
+              <p><strong>Therapieplan:</strong></p>
+              <ol>
+                <li><strong>Verhaltensanpassung:</strong> Schweres Heben vermeiden, langes Sitzen vermeiden. Sanfte Bewegung und Gehen empfohlen.</li>
+                <li><strong>Medikation:</strong>
+                  <ul>
+                    <li>Naproxen 500 mg zweimal täglich zu den Mahlzeiten für 10 Tage</li>
+                    <li>Cyclobenzaprin 5 mg zur Nacht bei Bedarf bei Muskelverspannung</li>
+                  </ul>
+                </li>
+                <li><strong>Physiotherapie:</strong> Überweisung für McKenzie-Methode und Rumpfstabilisationsprogramm</li>
+                <li><strong>Wiedervorstellung:</strong> In 2-3 Wochen bei anhaltenden oder verschlimmernden Symptomen. Sofortige Vorstellung bei Beinschwäche, Taubheit oder Blasen-/Darmstörungen.</li>
+              </ol>
+            </div>
+          </text>
+        </section>
+        
+        <section>
+          <title value="Unterschrift erforderlich"/>
+          <code>
+            <coding>
+              <system value="http://example.org/document-sections"/>
+              <code value="signature-section"/>
+              <display value="Unterschriftenabschnitt"/>
+            </coding>
+          </code>
+          <text>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p>Ich habe die obige Dokumentation geprüft und bestätige, dass die Informationen nach bestem Wissen korrekt und vollständig sind. Mit meiner Unterschrift bestätige ich die Kenntnisnahme und das Verständnis der Beurteilung, Diagnose und des während dieses Besuchs besprochenen Behandlungsplans.</p>
+            </div>
+          </text>
+        </section>
+      </Composition>
+    </resource>
+  </entry>
+  
+  <entry>
+    <resource>
+      <Patient xmlns="http://hl7.org/fhir">
+        <id value="patient-001"/>
+        <identifier>
+          <system value="http://krankenhaus.beispiel.de/patientennummer"/>
+          <value value="PAT-2024-78432"/>
+        </identifier>
+        <name>
+          <family value="Müller"/>
+          <given value="Maria"/>
+          <given value="Elena"/>
+        </name>
+        <gender value="female"/>
+        <birthDate value="1985-03-22"/>
+        <address>
+          <line value="Eichenweg 45, Wohnung 3B"/>
+          <city value="München"/>
+          <state value="Bayern"/>
+          <postalCode value="80331"/>
+        </address>
+        <telecom>
+          <system value="phone"/>
+          <value value="+49 89 234 5678"/>
+          <use value="mobile"/>
+        </telecom>
+      </Patient>
+    </resource>
+  </entry>
+  
+  <entry>
+    <resource>
+      <Practitioner xmlns="http://hl7.org/fhir">
+        <id value="practitioner-001"/>
+        <name>
+          <prefix value="Dr. med."/>
+          <given value="Thomas"/>
+          <family value="Schmidt"/>
+        </name>
+      </Practitioner>
+    </resource>
+  </entry>
+  
+  <entry>
+    <resource>
+      <PractitionerRole xmlns="http://hl7.org/fhir">
+        <id value="practitioner-role-001"/>
+        <code>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/practitioner-role"/>
+            <code value="doctor"/>
+            <display value="Behandelnder Arzt"/>
+          </coding>
+        </code>
+        <specialty>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="394810000"/>
+            <display value="Orthopädie"/>
+          </coding>
+        </specialty>
+      </PractitionerRole>
+    </resource>
+  </entry>
+  
+  <entry>
+    <resource>
+      <Organization xmlns="http://hl7.org/fhir">
+        <id value="organization-001"/>
+        <name value="Städtisches Klinikum München"/>
+        <address>
+          <line value="Klinikstraße 100"/>
+          <city value="München"/>
+          <state value="Bayern"/>
+          <postalCode value="80336"/>
+        </address>
+      </Organization>
+    </resource>
+  </entry>
+  
+  <entry>
+    <resource>
+      <Encounter xmlns="http://hl7.org/fhir">
+        <id value="encounter-001"/>
+        <status value="finished"/>
+        <period>
+          <start value="2024-01-15T14:00:00Z"/>
+          <end value="2024-01-15T14:45:00Z"/>
+        </period>
+        <reasonCode>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="279039007"/>
+            <display value="Rückenschmerzen im Lendenbereich"/>
+          </coding>
+        </reasonCode>
+      </Encounter>
+    </resource>
+  </entry>
+  
+  <entry>
+    <resource>
+      <Location xmlns="http://hl7.org/fhir">
+        <id value="location-001"/>
+        <name value="Orthopädische Ambulanz, Raum 204"/>
+      </Location>
+    </resource>
+  </entry>
+</Bundle>

@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle xmlns="http://hl7.org/fhir">
+  <id value="behandlungsplan-bundle"/>
+  <type value="document"/>
+  <timestamp value="2024-01-22T11:30:00Z"/>
+
+  <entry>
+    <resource>
+      <Composition xmlns="http://hl7.org/fhir">
+        <id value="composition-treatment-001"/>
+        <status value="final"/>
+        <type>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="18776-5"/>
+            <display value="Behandlungsplan"/>
+          </coding>
+        </type>
+        <title value="Behandlungsplan - Physiotherapie"/>
+        <date value="2024-01-22T11:30:00Z"/>
+        <confidentiality value="N"/>
+
+        <section>
+          <title value="Diagnose"/>
+          <code>
+            <coding>
+              <system value="http://loinc.org"/>
+              <code value="29308-4"/>
+              <display value="Diagnose"/>
+            </coding>
+          </code>
+          <text>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p><strong>Behandlungsdiagnose:</strong> Chronische Lumbalgie mit muskulärer Dysbalance (M54.5)</p>
+              <p><strong>Klinische Befunde:</strong></p>
+              <ul>
+                <li>Eingeschränkte Beweglichkeit der LWS</li>
+                <li>Verhärtete paraspinale Muskulatur</li>
+                <li>Schwäche der Rumpfstabilisatoren</li>
+              </ul>
+            </div>
+          </text>
+        </section>
+
+        <section>
+          <title value="Therapieziele"/>
+          <code>
+            <coding>
+              <system value="http://example.org/document-sections"/>
+              <code value="goals"/>
+              <display value="Therapieziele"/>
+            </coding>
+          </code>
+          <text>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p><strong>Kurzfristige Ziele (4 Wochen):</strong></p>
+              <ul>
+                <li>Schmerzreduktion auf VAS ≤ 3</li>
+                <li>Verbesserung der LWS-Flexion um 50%</li>
+                <li>Erlernen von Eigenübungen</li>
+              </ul>
+              <p><strong>Langfristige Ziele (12 Wochen):</strong></p>
+              <ul>
+                <li>Schmerzfreiheit bei Alltagsaktivitäten</li>
+                <li>Vollständige Beweglichkeit der LWS</li>
+                <li>Aufbau der Rumpfmuskulatur</li>
+                <li>Rückkehr zu sportlichen Aktivitäten</li>
+              </ul>
+            </div>
+          </text>
+        </section>
+
+        <section>
+          <title value="Verordnete Maßnahmen"/>
+          <code>
+            <coding>
+              <system value="http://loinc.org"/>
+              <code value="18776-5"/>
+              <display value="Behandlungsplan"/>
+            </coding>
+          </code>
+          <text>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p><strong>Physiotherapie:</strong></p>
+              <table border="1" cellpadding="5">
+                <tr>
+                  <th>Maßnahme</th>
+                  <th>Anzahl</th>
+                  <th>Frequenz</th>
+                </tr>
+                <tr>
+                  <td>Krankengymnastik (KG)</td>
+                  <td>6 Einheiten</td>
+                  <td>2x wöchentlich</td>
+                </tr>
+                <tr>
+                  <td>Manuelle Therapie (MT)</td>
+                  <td>6 Einheiten</td>
+                  <td>2x wöchentlich</td>
+                </tr>
+                <tr>
+                  <td>Wärmetherapie</td>
+                  <td>6 Einheiten</td>
+                  <td>Vor KG/MT</td>
+                </tr>
+              </table>
+              <p><strong>Dauer:</strong> 3 Wochen</p>
+            </div>
+          </text>
+        </section>
+
+        <section>
+          <title value="Eigenübungsprogramm"/>
+          <code>
+            <coding>
+              <system value="http://example.org/document-sections"/>
+              <code value="home-exercises"/>
+              <display value="Eigenübungen"/>
+            </coding>
+          </code>
+          <text>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p><strong>Täglich durchzuführende Übungen:</strong></p>
+              <ol>
+                <li><strong>Beckenkippung in Rückenlage:</strong> 3x10 Wiederholungen</li>
+                <li><strong>Knie-zur-Brust-Dehnung:</strong> 3x30 Sekunden pro Seite</li>
+                <li><strong>Brücke (Bridging):</strong> 3x10 Wiederholungen</li>
+                <li><strong>Vierfüßlerstand Arm/Bein-Heben:</strong> 2x8 pro Seite</li>
+                <li><strong>Katze-Kuh-Mobilisation:</strong> 2x10 Wiederholungen</li>
+              </ol>
+              <p><strong>Hinweis:</strong> Bei Schmerzen während der Übungen sofort abbrechen und Therapeuten informieren.</p>
+            </div>
+          </text>
+        </section>
+
+        <section>
+          <title value="Verhaltensempfehlungen"/>
+          <code>
+            <coding>
+              <system value="http://example.org/document-sections"/>
+              <code value="recommendations"/>
+              <display value="Empfehlungen"/>
+            </coding>
+          </code>
+          <text>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p><strong>Im Alltag beachten:</strong></p>
+              <ul>
+                <li>Regelmäßige Bewegungspausen bei sitzender Tätigkeit (alle 45 Min.)</li>
+                <li>Ergonomische Arbeitsplatzgestaltung</li>
+                <li>Heben aus den Knien, nicht aus dem Rücken</li>
+                <li>Seitenlage beim Schlafen mit Kissen zwischen den Knien</li>
+                <li>Wärmeanwendungen bei Muskelverspannungen</li>
+              </ul>
+            </div>
+          </text>
+        </section>
+
+        <section>
+          <title value="Einverständniserklärung"/>
+          <code>
+            <coding>
+              <system value="http://example.org/document-sections"/>
+              <code value="signature-section"/>
+              <display value="Unterschriftenabschnitt"/>
+            </coding>
+          </code>
+          <text>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p>Ich habe den Behandlungsplan zur Kenntnis genommen und erkläre mich mit den verordneten Maßnahmen einverstanden. Ich wurde über die Notwendigkeit der aktiven Mitarbeit und der Durchführung des Eigenübungsprogramms aufgeklärt.</p>
+            </div>
+          </text>
+        </section>
+      </Composition>
+    </resource>
+  </entry>
+
+  <entry>
+    <resource>
+      <Patient xmlns="http://hl7.org/fhir">
+        <id value="patient-001"/>
+        <identifier>
+          <system value="http://krankenhaus.beispiel.de/patientennummer"/>
+          <value value="PAT-2024-78432"/>
+        </identifier>
+        <name>
+          <family value="Müller"/>
+          <given value="Maria"/>
+          <given value="Elena"/>
+        </name>
+        <gender value="female"/>
+        <birthDate value="1985-03-22"/>
+      </Patient>
+    </resource>
+  </entry>
+
+  <entry>
+    <resource>
+      <Practitioner xmlns="http://hl7.org/fhir">
+        <id value="practitioner-002"/>
+        <name>
+          <prefix value="Dr. med."/>
+          <given value="Anna"/>
+          <family value="Weber"/>
+        </name>
+        <qualification>
+          <code>
+            <coding>
+              <system value="http://example.org/qualifications"/>
+              <code value="ortho"/>
+              <display value="Fachärztin für Orthopädie"/>
+            </coding>
+          </code>
+        </qualification>
+      </Practitioner>
+    </resource>
+  </entry>
+
+  <entry>
+    <resource>
+      <Organization xmlns="http://hl7.org/fhir">
+        <id value="organization-001"/>
+        <name value="Städtisches Klinikum München"/>
+        <address>
+          <line value="Klinikstraße 100"/>
+          <city value="München"/>
+          <state value="Bayern"/>
+          <postalCode value="80336"/>
+        </address>
+      </Organization>
+    </resource>
+  </entry>
+</Bundle>

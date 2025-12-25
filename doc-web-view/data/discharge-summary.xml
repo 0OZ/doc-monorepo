@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle xmlns="http://hl7.org/fhir">
+  <id value="entlassbericht-bundle"/>
+  <type value="document"/>
+  <timestamp value="2024-01-20T16:00:00Z"/>
+
+  <entry>
+    <resource>
+      <Composition xmlns="http://hl7.org/fhir">
+        <id value="composition-discharge-001"/>
+        <status value="final"/>
+        <type>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="18842-5"/>
+            <display value="Entlassbericht"/>
+          </coding>
+        </type>
+        <title value="Entlassbericht - Stationäre Behandlung"/>
+        <date value="2024-01-20T16:00:00Z"/>
+        <confidentiality value="N"/>
+
+        <section>
+          <title value="Aufnahmediagnose"/>
+          <code>
+            <coding>
+              <system value="http://loinc.org"/>
+              <code value="46241-6"/>
+              <display value="Aufnahmediagnose"/>
+            </coding>
+          </code>
+          <text>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p><strong>Hauptdiagnose:</strong> Akute Lumboischialgie links (M54.4)</p>
+              <p><strong>Nebendiagnosen:</strong></p>
+              <ul>
+                <li>Bandscheibenprotrusion L4/L5 (M51.1)</li>
+                <li>Arterielle Hypertonie (I10)</li>
+              </ul>
+            </div>
+          </text>
+        </section>
+
+        <section>
+          <title value="Anamnese und Aufnahmegrund"/>
+          <code>
+            <coding>
+              <system value="http://loinc.org"/>
+              <code value="10164-2"/>
+              <display value="Anamnese"/>
+            </coding>
+          </code>
+          <text>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p>Stationäre Aufnahme am 15.01.2024 wegen akuter Verschlechterung einer seit 3 Wochen bestehenden Lumbalgie mit neu aufgetretener Ausstrahlung ins linke Bein.</p>
+              <p>Die konservative ambulante Therapie zeigte keine ausreichende Wirkung, sodass eine stationäre Schmerztherapie erforderlich wurde.</p>
+            </div>
+          </text>
+        </section>
+
+        <section>
+          <title value="Durchgeführte Diagnostik"/>
+          <code>
+            <coding>
+              <system value="http://loinc.org"/>
+              <code value="30954-2"/>
+              <display value="Diagnostische Untersuchungen"/>
+            </coding>
+          </code>
+          <text>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p><strong>MRT der LWS (16.01.2024):</strong></p>
+              <ul>
+                <li>Bandscheibenprotrusion L4/L5 mit Kontakt zur Nervenwurzel L5 links</li>
+                <li>Keine Spinalkanalstenose</li>
+                <li>Degenerative Veränderungen L3-S1</li>
+              </ul>
+              <p><strong>Labor (15.01.2024):</strong></p>
+              <ul>
+                <li>CRP: 0,5 mg/dl (Norm &lt;0,5)</li>
+                <li>Leukos: 7.800/µl (Norm 4.000-10.000)</li>
+                <li>Alle weiteren Werte im Normbereich</li>
+              </ul>
+            </div>
+          </text>
+        </section>
+
+        <section>
+          <title value="Therapie während des Aufenthalts"/>
+          <code>
+            <coding>
+              <system value="http://loinc.org"/>
+              <code value="18776-5"/>
+              <display value="Behandlungsplan"/>
+            </coding>
+          </code>
+          <text>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p><strong>Medikamentöse Therapie:</strong></p>
+              <ul>
+                <li>Ibuprofen 600 mg 1-1-1</li>
+                <li>Pantoprazol 40 mg 1-0-0</li>
+                <li>Tizanidin 4 mg 0-0-1</li>
+                <li>CT-gesteuerte periradikuläre Infiltration L5 links am 17.01.2024</li>
+              </ul>
+              <p><strong>Physiotherapie:</strong></p>
+              <ul>
+                <li>Tägliche Krankengymnastik</li>
+                <li>Rückenschule</li>
+                <li>Elektrotherapie</li>
+              </ul>
+            </div>
+          </text>
+        </section>
+
+        <section>
+          <title value="Entlassungsbefund"/>
+          <code>
+            <coding>
+              <system value="http://loinc.org"/>
+              <code value="8648-8"/>
+              <display value="Entlassungsbefund"/>
+            </coding>
+          </code>
+          <text>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p>Deutliche Besserung der Beschwerden unter Therapie. Schmerzintensität bei Entlassung VAS 2/10 (bei Aufnahme VAS 8/10).</p>
+              <p>Neurologisch unauffällig, keine sensomotorischen Defizite.</p>
+            </div>
+          </text>
+        </section>
+
+        <section>
+          <title value="Empfehlungen bei Entlassung"/>
+          <code>
+            <coding>
+              <system value="http://loinc.org"/>
+              <code value="8653-8"/>
+              <display value="Entlassungsmedikation"/>
+            </coding>
+          </code>
+          <text>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p><strong>Medikation:</strong></p>
+              <ul>
+                <li>Ibuprofen 600 mg bei Bedarf, max. 3x täglich für 7 Tage</li>
+                <li>Pantoprazol 20 mg 1-0-0 für die Dauer der NSAR-Einnahme</li>
+              </ul>
+              <p><strong>Weitere Empfehlungen:</strong></p>
+              <ul>
+                <li>Ambulante Physiotherapie fortsetzen (6x KG verordnet)</li>
+                <li>Rückenschonende Verhaltensweisen beachten</li>
+                <li>Wiedervorstellung beim Hausarzt in 1 Woche</li>
+                <li>Bei Verschlechterung oder neurologischen Symptomen sofortige Wiedervorstellung</li>
+              </ul>
+            </div>
+          </text>
+        </section>
+
+        <section>
+          <title value="Unterschrift"/>
+          <code>
+            <coding>
+              <system value="http://example.org/document-sections"/>
+              <code value="signature-section"/>
+              <display value="Unterschriftenabschnitt"/>
+            </coding>
+          </code>
+          <text>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p>Ich bestätige den Erhalt dieses Entlassberichts und wurde über die weiteren Empfehlungen und die Entlassungsmedikation aufgeklärt.</p>
+            </div>
+          </text>
+        </section>
+      </Composition>
+    </resource>
+  </entry>
+
+  <entry>
+    <resource>
+      <Patient xmlns="http://hl7.org/fhir">
+        <id value="patient-001"/>
+        <identifier>
+          <system value="http://krankenhaus.beispiel.de/patientennummer"/>
+          <value value="PAT-2024-78432"/>
+        </identifier>
+        <name>
+          <family value="Müller"/>
+          <given value="Maria"/>
+          <given value="Elena"/>
+        </name>
+        <gender value="female"/>
+        <birthDate value="1985-03-22"/>
+      </Patient>
+    </resource>
+  </entry>
+
+  <entry>
+    <resource>
+      <Practitioner xmlns="http://hl7.org/fhir">
+        <id value="practitioner-001"/>
+        <name>
+          <prefix value="Dr. med."/>
+          <given value="Thomas"/>
+          <family value="Schmidt"/>
+        </name>
+      </Practitioner>
+    </resource>
+  </entry>
+
+  <entry>
+    <resource>
+      <Organization xmlns="http://hl7.org/fhir">
+        <id value="organization-001"/>
+        <name value="Städtisches Klinikum München"/>
+        <address>
+          <line value="Klinikstraße 100"/>
+          <city value="München"/>
+          <state value="Bayern"/>
+          <postalCode value="80336"/>
+        </address>
+      </Organization>
+    </resource>
+  </entry>
+
+  <entry>
+    <resource>
+      <Encounter xmlns="http://hl7.org/fhir">
+        <id value="encounter-001"/>
+        <status value="finished"/>
+        <class>
+          <system value="http://terminology.hl7.org/CodeSystem/v3-ActCode"/>
+          <code value="IMP"/>
+          <display value="Stationär"/>
+        </class>
+        <period>
+          <start value="2024-01-15T08:00:00Z"/>
+          <end value="2024-01-20T16:00:00Z"/>
+        </period>
+      </Encounter>
+    </resource>
+  </entry>
+</Bundle>

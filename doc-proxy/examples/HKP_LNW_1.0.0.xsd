@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- bearbeitet mit XMLSpy v2025 (x64) (https://www.altova.com) von Frank (GKV-Spitzenverband) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.gkv-datenaustausch.de/XMLSchema/SLE_LWN/1.0" xmlns:bas="http://www.gkv-datenaustausch.de/XMLSchema/HKP_BAS/1.0" xmlns:slpbas="http://www.gkv-datenaustausch.de/XMLSchema/SLP_BAS/1.0" targetNamespace="http://www.gkv-datenaustausch.de/XMLSchema/SLE_LWN/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.gkv-datenaustausch.de/XMLSchema/SLP_BAS/1.0" schemaLocation="SLP_BAS_1.0.0.xsd"/>
+	<xs:import namespace="http://www.gkv-datenaustausch.de/XMLSchema/HKP_BAS/1.0" schemaLocation="HKP_BAS_1.0.0.xsd"/>
+	<xs:element name="Leistungsnachweis">
+		<xs:annotation>
+			<xs:documentation>Enthält die Angaben zu einem Leistungsnachweis. Leistungsnachweis wird verpflichtend bei Rechnungstyp 01. Bei Rechnungstyp 02,03,04 und 10 ist der Leistungsnachweis optional. </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Leistungserbringer_IK" type="slpbas:Institutionskennzeichen_Stp">
+					<xs:annotation>
+						<xs:documentation>IK des Pflegedienstes, der die Leistungen erbracht hat</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Krankenversichertennummer" type="slpbas:KVNR_Stp">
+					<xs:annotation>
+						<xs:documentation>Krankenversicherungsnummer ist zwingend gemäß Leistungsbescheid/ Bewilligung anzugeben. Füllzeichen sind nicht zulässig. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Verantwortliche_Fachkraft" type="slpbas:LBNR_stp">
+					<xs:annotation>
+						<xs:documentation>Lebenslange Beschäftigtennummer (LBNR) der verantwortlichen Fachkraft </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<!--=====   Definition des Einsatz  =======   -->
+				<xs:element name="Einsatz" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Beginn_Datum_Uhrzeit" type="xs:dateTime">
+								<xs:annotation>
+									<xs:documentation>Tag der Leistungserbringung und Beginn des Einsatzes</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Ende_Uhrzeit" type="xs:time" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Ende eines Einsatzes ist anzugeben, wenn es sich um eine Zeitvergütung handelt. Wenn die Ende Uhrzeit vor der Beginn Uhrzeit liegt, wird dies als Einsatz über Mitternacht gewertet. </xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<!--=====   Definition einer Position   ======= -->
+							<xs:element name="Leistungsnachweis_Position" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Positions_Nr" type="bas:Positionsnummer_6stellig_stp">
+											<xs:annotation>
+												<xs:documentation>Hier ist die Positionsnummer der Einzelleistung anzugeben. Dies dient dem Abgleich zur Rechnung. Siehe: Anlage 3; 8.2.4</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Menge" type="bas:Position_Menge_Stp">
+											<xs:annotation>
+												<xs:documentation>Anzahl der erbrachten Positionsnummer</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+										<xs:element name="Beschäftigtennummer" type="slpbas:LBNR_stp" maxOccurs="2">
+											<xs:annotation>
+												<xs:documentation>Beschäftigtennummer der Person, welche die Leistung erbracht hat. Wenn mehrere Personen eine Leistung gleichzeitig erbracht haben, sind die Beschäftigten-nummern aller Personen anzugeben. Wenn die Person, welche die Leistung erbracht hat, über keine Beschäftigtennummer verfügt, ist ein Ersatzwert gemäß Anlage 3; 8.1.19 (Ersatz-Beschäftigten-nummer) anzugeben.</xs:documentation>
+											</xs:annotation>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Unterschrift_Versicherter">
+					<xs:annotation>
+						<xs:documentation>Enthält die Unterschrift des Versicherten</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Art_der_Unterschrift" type="bas:Art_Unterschrift_Stp">
+								<xs:annotation>
+									<xs:documentation>Kennzeichen zur Art der Unterschrift gemäß Schlüsselverzeichnis 3.2</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Datum_Uhrzeit_der_Unterschrift" type="xs:dateTime" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Datum der Unterschrift durch den Versicherten oder den Vertreter; darf fehlen bei Art der Unterschrift = 3</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:choice>
+								<xs:element name="Unterschrift">
+									<xs:annotation>
+										<xs:documentation>Wenn Art der Unterschrift = [1-4]</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="Datei" type="xs:base64Binary">
+												<xs:annotation>
+													<xs:documentation>Enthält die Unterschrift des Versicherten, seines (abwesenden) Vertreters oder eine alternative Bestätigung, jeweils codiert in base64</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="Dateityp" type="bas:Dateityp_Stp">
+												<xs:annotation>
+													<xs:documentation>MIME-Type der Datei gemäß Schlüsselverzeichnis 3.6. Wenn Art_der_Unterschrift = 1 oder 2, dann Dateityp = 3 oder 4. Wenn Art_der_Unterschrift = 3, dann Dateityp = 2. Wenn Art_der_Unterschrit = 4, dann alle Ausprägungen von Dateityp möglich.</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="fehlende_Unterschrift">
+									<xs:annotation>
+										<xs:documentation>Wenn Art der Unterschrift = 5</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="Kennzeichen_Grund" type="bas:Grund_fehlende_Unterschrift_Stp">
+												<xs:annotation>
+													<xs:documentation>Enthält das Kennzeichen für den Grund der fehlenden Unterschrift gemäß Schlüsselverzeichnis 3.3</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="Sonstiges" type="slpbas:Freitext_kurz_Stp" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation>Freitext; Grund für das Fehlen der Unterschrift. Muss vorhanden sein, wenn Kennzeichen_Grund = 4</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:choice>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Leistungsnachweis-ID" type="slpbas:UUID_Stp"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

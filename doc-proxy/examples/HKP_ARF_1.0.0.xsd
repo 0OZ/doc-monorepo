@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- bearbeitet mit XMLSpy v2025 (x64) (https://www.altova.com) von Frank Trumpfheller (GKV-Spitzenverband) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.gkv-datenaustausch.de/XMLSchema/HKP_ARF/1.0" xmlns:bas="http://www.gkv-datenaustausch.de/XMLSchema/HKP_BAS/1.0" xmlns:slpbas="http://www.gkv-datenaustausch.de/XMLSchema/SLP_BAS/1.0" targetNamespace="http://www.gkv-datenaustausch.de/XMLSchema/HKP_ARF/1.0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.gkv-datenaustausch.de/XMLSchema/SLP_BAS/1.0" schemaLocation="SLP_BAS_1.0.0.xsd"/>
+	<xs:import namespace="http://www.gkv-datenaustausch.de/XMLSchema/HKP_BAS/1.0" schemaLocation="HKP_BAS_1.0.0.xsd"/>
+	<xs:complexType name="Abrechnungsfall_Ctp">
+		<xs:annotation>
+			<xs:documentation>Ein Abrechnungsfall für einen Versicherten</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Abrechnungsfall_ID" type="slpbas:UUID_Stp">
+				<xs:annotation>
+					<xs:documentation>Einzutragen ist die Abrechnungsfall-Nummer je Abrechnungsfall. Die Abrechnungsfall-Nummer muss eindeutig sein (je Rechnungsnummer, je Rechnungs-Erstellungsjahr und je IK des Rechnungsstellers</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Leistungsnachweis_Datei" type="xs:base64Binary">
+				<xs:annotation>
+					<xs:documentation>XML-Datei nach Schema des Leistungsnachweis, signiert und codiert in base64</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Leistungsnachweis_ID" type="slpbas:UUID_Stp">
+				<xs:annotation>
+					<xs:documentation>Eindeutige ID der abrechnungsbegründenden Unterlage</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Abrechnungsmonat" type="slpbas:Abrechnungsmonat_Stp">
+				<xs:annotation>
+					<xs:documentation>Monat, in dem die Leistungen erbracht wurden im Format JJJJMM</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:choice>
+				<xs:element name="Genehmigungskennzeichen" type="bas:Genehmigungskennzeichen_stp" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Hier ist die durch die Krankenkasse bei der Kostenzusage vergebene Genehmigungsnummer oder das Aktenzeichen einzutragen.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="eVO_ID" type="bas:eVO_stp" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Eindeutige ID der elektronischen Verordnung Für eine eindeutige Zuordnung der Verordnung zum Abrechnungsfall. Sobald die eVO-ID aktiv geschaltet wird, sollte dieses Feld zum Muss-Feld werden.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:choice>
+			<xs:element name="Betriebsstaettennummer" type="slpbas:BSNR_Stp">
+				<xs:annotation>
+					<xs:documentation>Inhalt des Feldes 'Betriebsstättennum-mer' aus der Verordnung ist zwingend anzugeben. Ist im Feld Betriebsstätten-nummer kein Wert vorhanden, ist 999999999 anzugeben, soweit keine an-derweitigen Regelungen bestehen. Es sind nur Ziffern von 0 bis 9 zu verwenden.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Lebenslange_Arztnummer" type="slpbas:LANR_Stp">
+				<xs:annotation>
+					<xs:documentation>Inhalt des Feldes 'Vertragsarztnum-mer/Arzt-Nr.' aus der Verordnung ist zwingend anzugeben. Das Auffüllen des Feldes auf 9 Stellen ist unzulässig. Es sind nur die Ziffern 0 - 9 zu verwenden. Ist kein Wert vorhanden, ist das Feld mit „999999999“ zu übermitteln, sofern keine anderweitigen Regelungen bestehen. Bei Verordnungen durch Zahnärzte ist die Nummer des Zahnarztes einzutragen.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Verordnungsdatum" type="xs:date">
+				<xs:annotation>
+					<xs:documentation>YYYY-MM-DD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Unfallkennzeichen" type="bas:Unfallkennzeichen_Stp" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Siehe Schlüssel Unfall/Sonstiges Anlage 3 Abschnitt 8.1.2 </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Kennzeichen_BVG_Sonstiges_SER" type="bas:Kennzeichen_BVG_Sonstiges_SER_Stp">
+				<xs:annotation>
+					<xs:documentation>Schlüssel BVG/SER Anlage 3 Abschnitt 8.1.2.1</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Diagnoseschluessel" type="bas:Diagnoseschluessel_Stp" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Falls auf der Verordnung ein ICD-10- GM-Code als Diagnoseschlüssel aufgebracht ist, ist dieser zwingend anzugeben. Es ist nicht der Indikationsschlüssel anzugeben.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Krankenversichertennummer" type="slpbas:KVNR_Stp">
+				<xs:annotation>
+					<xs:documentation> Krankenversicherungsnummer ist zwingend gemäß Leistungsbescheid/ Bewilligung anzugeben. Füllzeichen sind nicht zulässig</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Kennz_Bes_Versorgungsform" type="bas:Kennzeichen_Besondere_Versorgungsform_stp" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Vertragskennzeichen für besondere Versorgungsformen</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Gesamtbetrag" type="slpbas:Betrag_Stp">
+				<xs:annotation>
+					<xs:documentation>Gesamtbetrag je Abrechnungsfall Berechnungsregel: Summe aller zu vergütenden Abrechnungspositionen des Abrechnungsfalls von: ((EHK.Einzelbetrag der Abrechnungsposition mal EHK.Anzahl/Menge) kaufmännisch gerundet). </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<!--=====   Definition des Einsatz   ======= -->
+			<xs:element name="Einsatz" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Beginn_Datum_Uhrzeit" type="xs:dateTime">
+							<xs:annotation>
+								<xs:documentation>Tag der Leistungserbringung und Beginn des Einsatzes</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Ende_Datum_Uhrzeit" type="xs:dateTime" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>Ende eines Einsatzes ist anzugeben, wenn es sich um eine Zeitvergütung handelt.</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<!--=====   Definition einer Position   ======= -->
+						<xs:element name="Abrechnungsfall_Position" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Position">
+										<xs:annotation>
+											<xs:documentation>Es können Pauschalen oder Einzelleistungen angegeben werden. Unabhängig von der Vergütungsstruktur, ist immer die zu vergütende Positionsnummer anzugeben Siehe: Anlage 3; 8.2.4 (Abrechnungspositionsnummer für Leistungen der HK und HHH) </xs:documentation>
+										</xs:annotation>
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Positions_Nr" type="bas:Positionsnummer_6stellig_stp">
+													<xs:annotation>
+														<xs:documentation>Zu vergütende Abrechnungspositionsnummer</xs:documentation>
+													</xs:annotation>
+												</xs:element>
+												<xs:element name="Einzelleistung" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="Erbrachte_Leistung_Pos_Nr" type="bas:Positionsnummer_6stellig_stp">
+																<xs:annotation>
+																	<xs:documentation>Wird eine Leistungspauschale abgerechnet, sind hier die im Rahmen der Leistungspauschale erbrachten Einzelleistungen zwingend anzugeben.</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+															<xs:element name="Erbrachte_Leistung_Menge" type="bas:Position_Menge_Stp">
+																<xs:annotation>
+																	<xs:documentation>Anzahl der erbrachten Leistung bei Leistungspau-schalen</xs:documentation>
+																</xs:annotation>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="Menge" type="bas:Position_Menge_Stp">
+										<xs:annotation>
+											<xs:documentation>Die Anzahl der Abrechnungsposition ist grundsätzlich "1". Sie kann größer oder kleiner "1" sein bei Zeitvergütungen oder bei mehrmaliger Erbringung derselben Leistung in einem Einsatz (z.B. 2 x 032322 Wundverbände anlegen und wechseln)
+                                            </xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="LE_AbrCode" type="bas:LE_Abrechungscode_stp">
+										<xs:annotation>
+											<xs:documentation>Siehe: Anlage 3; 8.1.5.1 (Abrechnungscode)</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="TarifKennz_Bereich" type="bas:Tarifkennzeichen_Bereich_stp">
+										<xs:annotation>
+											<xs:documentation>Siehe: Anlage 3; 8.1.5.2 (1. und 2. Stelle Tarifbereich) Die Kennzeichnung „Leistungserbringergruppe" wird für die Abrechnung benötigt, da hierüber die Zuordnung zur gültigen vertraglichen Vereinbarung und damit zu den Abrechnungspositionsnummern erfolgt. Jede Vereinbarung sieht entsprechende Kennzeichen vor. Dieses ist entsprechend den Vergütungsregeln anzugeben.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="TarifKennz_Sonder" type="bas:Tarifkennzeichen_Sonder_stp">
+										<xs:annotation>
+											<xs:documentation>Siehe: Anlage 3; 8.1.5.2 (3.- 5. Stelle Sondertarife) Bei der Übermittlung von Kennzeichen für Sondertarife sind die zu übermittelnden Buchstaben ausschließlich in Großbuchstaben zulässig. </xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="Einzelpreis" type="slpbas:Betrag_Stp">
+										<xs:annotation>
+											<xs:documentation>Einzelpreis: Als Einzelpreis ist immer der vereinbarte Preis einer Abrechnungsposition zu verstehen.</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="Positionssumme" type="slpbas:Betrag_Stp">
+										<xs:annotation>
+											<xs:documentation>Produkt aus "Menge" und "Einzelpreis", kaufmän-nisch gerundet</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="Beschaeftigtennummer" type="slpbas:LBNR_stp" maxOccurs="2">
+										<xs:annotation>
+											<xs:documentation>Beschäftigtennummer nach § 293 Abs. 8 Satz 2 SGB V der Person, die die Leistung erbracht hat. Wenn die Person, die die Leistung erbracht hat, über keine Beschäftigtennummer verfügt, ist ein Ersatzwert gemäß Anlage 3, Schlüsseltabelle 8.1.19 anzugeben</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

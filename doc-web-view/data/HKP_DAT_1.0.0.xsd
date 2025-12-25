@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- bearbeitet mit XMLSpy v2025 (x64) (https://www.altova.com) von Frank Trumpfheller (GKV-Spitzenverband) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.gkv-datenaustausch.de/XMLSchema/SLP" xmlns:bas="http://www.gkv-datenaustausch.de/XMLSchema/HKP_BAS/1.0" xmlns:arn="http://www.gkv-datenaustausch.de/XMLSchema/HKP_ARN/1.0" xmlns:feh_tech="http://www.gkv-datenaustausch.de/XMLSchema/HKP_FEH_TECH/1.0" xmlns:slpbas="http://www.gkv-datenaustausch.de/XMLSchema/SLP_BAS/1.0" targetNamespace="http://www.gkv-datenaustausch.de/XMLSchema/SLP" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.gkv-datenaustausch.de/XMLSchema/SLP_BAS/1.0" schemaLocation="SLP_BAS_1.0.0.xsd"/>
+	<xs:import namespace="http://www.gkv-datenaustausch.de/XMLSchema/HKP_BAS/1.0" schemaLocation="HKP_BAS_1.0.0.xsd"/>
+	<xs:import namespace="http://www.gkv-datenaustausch.de/XMLSchema/HKP_ARN/1.0" schemaLocation="HKP_ARN_1.0.0.xsd"/>
+	<xs:import namespace="http://www.gkv-datenaustausch.de/XMLSchema/HKP_FEH_TECH/1.0" schemaLocation="HKP_FEH_TECH_1.0.0.xsd"/>
+	<xs:element name="Nutzdaten">
+		<xs:annotation>
+			<xs:documentation>Root</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Header">
+					<xs:annotation>
+						<xs:documentation>Beinhaltet die grundlegenden Informationen dieser Abrechnung.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Absender_IK" type="slpbas:Institutionskennzeichen_Stp">
+								<xs:annotation>
+									<xs:documentation>Institutionskennzeichen des Absenders</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Empfaenger_IK" type="slpbas:Institutionskennzeichen_Stp">
+								<xs:annotation>
+									<xs:documentation>Institutionskennzeichen des Empfängers</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Erstellzeitpunkt" type="xs:dateTime">
+								<xs:annotation>
+									<xs:documentation>Datum und Uhrzeit der Erstellung der Nutzdatendatei</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Datei_ID" type="slpbas:UUID_Stp">
+								<xs:annotation>
+									<xs:documentation>Eindeutige Nachrichten ID in Form einer UUID</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Verfahrenskennung" type="bas:VerfahrenskennungHKP_Stp">
+								<xs:annotation>
+									<xs:documentation>Verfahrenskennung (Transportweg), „THKP0“ für Testdaten oder „EHKP0“ für Echtdaten</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Unterverfahren" type="bas:UnterverfahrenHKP_Stp">
+								<xs:annotation>
+									<xs:documentation>Kennung des Unterverfahrens</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Nachrichtentyp" type="bas:Nachrichtentyp_Stp">
+								<xs:annotation>
+									<xs:documentation>Kennung des Nachrichtentyps</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Logische_Version" type="slpbas:Logische_Version_Stp">
+								<xs:annotation>
+									<xs:documentation>Logische Version des Verfahrens gemäß Schlüsselverzeichnis</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+							<xs:element name="Dokurechnung" type="xs:boolean" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>Feld gilt nur für kassenseitige Abrechnungsdienstleister</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Body">
+					<xs:annotation>
+						<xs:documentation>Beinhaltet die Nachricht.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:choice>
+							<xs:element name="Abrechnungsnachricht" type="arn:Abrechnungsnachricht_Ctp"/>
+							<xs:element name="Fehlernachricht_technisch" type="feh_tech:Fehlernachricht_technisch_Ctp"/>
+						</xs:choice>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

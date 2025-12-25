@@ -1,0 +1,324 @@
+@import "tailwindcss";
+
+/* Healthcare Document Signing - Design System */
+/* Light mode is the default */
+
+@theme {
+  /* Primary Colors - Professional Teal */
+  --color-primary: oklch(0.55 0.12 180);
+  --color-primary-foreground: oklch(1 0 0);
+  
+  /* Background & Surface */
+  --color-background: oklch(0.985 0.005 250);
+  --color-foreground: oklch(0.15 0.03 260);
+  
+  /* Card & Elevated Surfaces */
+  --color-card: oklch(1 0 0);
+  --color-card-foreground: oklch(0.15 0.03 260);
+  
+  /* Muted / Secondary */
+  --color-muted: oklch(0.96 0.005 250);
+  --color-muted-foreground: oklch(0.55 0.02 260);
+  
+  /* Borders */
+  --color-border: oklch(0.92 0.01 260);
+  --color-input: oklch(0.92 0.01 260);
+  --color-ring: oklch(0.55 0.12 180);
+  
+  /* Status Colors */
+  --color-destructive: oklch(0.58 0.22 25);
+  --color-destructive-foreground: oklch(1 0 0);
+  
+  /* Accent */
+  --color-accent: oklch(0.96 0.005 250);
+  --color-accent-foreground: oklch(0.15 0.03 260);
+  
+  /* Popover */
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.15 0.03 260);
+  
+  /* Secondary */
+  --color-secondary: oklch(0.96 0.005 250);
+  --color-secondary-foreground: oklch(0.15 0.03 260);
+  
+  /* Chart colors */
+  --color-chart-1: oklch(0.55 0.12 180);
+  --color-chart-2: oklch(0.62 0.15 230);
+  --color-chart-3: oklch(0.65 0.14 160);
+  --color-chart-4: oklch(0.78 0.18 85);
+  --color-chart-5: oklch(0.58 0.22 25);
+  
+  /* Border radius */
+  --radius: 0.625rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  
+  /* Fonts */
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-serif), ui-serif, Georgia, serif;
+}
+
+/* Dark mode colors - only activated via .dark class */
+.dark {
+  --color-primary: oklch(0.65 0.12 180);
+  --color-primary-foreground: oklch(0.15 0.03 260);
+  
+  --color-background: oklch(0.12 0.02 260);
+  --color-foreground: oklch(0.95 0.005 250);
+  
+  --color-card: oklch(0.16 0.02 260);
+  --color-card-foreground: oklch(0.95 0.005 250);
+  
+  --color-muted: oklch(0.22 0.02 260);
+  --color-muted-foreground: oklch(0.65 0.015 260);
+  
+  --color-border: oklch(0.28 0.02 260);
+  --color-input: oklch(0.28 0.02 260);
+  
+  --color-accent: oklch(0.22 0.02 260);
+  --color-accent-foreground: oklch(0.95 0.005 250);
+  
+  --color-popover: oklch(0.16 0.02 260);
+  --color-popover-foreground: oklch(0.95 0.005 250);
+  
+  --color-secondary: oklch(0.22 0.02 260);
+  --color-secondary-foreground: oklch(0.95 0.005 250);
+}
+
+/* Base Styles */
+* {
+  border-color: var(--color-border);
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  font-feature-settings: "rlig" 1, "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* FHIR Narrative Styles - for rendered HTML from FHIR documents */
+.fhir-narrative {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--color-foreground);
+}
+
+.fhir-narrative p {
+  margin-bottom: 1rem;
+}
+
+.fhir-narrative p:last-child {
+  margin-bottom: 0;
+}
+
+.fhir-narrative strong {
+  font-weight: 600;
+  color: var(--color-foreground);
+}
+
+.fhir-narrative ul,
+.fhir-narrative ol {
+  margin: 0.75rem 0;
+  padding-left: 1.5rem;
+}
+
+.fhir-narrative li {
+  margin-bottom: 0.375rem;
+}
+
+.fhir-narrative li:last-child {
+  margin-bottom: 0;
+}
+
+.fhir-narrative ul {
+  list-style-type: disc;
+}
+
+.fhir-narrative ol {
+  list-style-type: decimal;
+}
+
+.fhir-narrative ul ul,
+.fhir-narrative ol ul {
+  list-style-type: circle;
+  margin-top: 0.375rem;
+}
+
+/* Signature Canvas Styles */
+.signature-canvas {
+  background-color: white;
+  border-radius: var(--radius);
+}
+
+/* Touch optimization */
+@media (pointer: coarse) {
+  .signature-canvas {
+    touch-action: none;
+  }
+}
+
+/* Ensure tap targets are at least 44px on mobile */
+@media (max-width: 640px) {
+  button,
+  [role="button"],
+  input[type="submit"],
+  input[type="button"] {
+    min-height: 48px;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus styles */
+:focus-visible {
+  outline: 2px solid var(--color-ring);
+  outline-offset: 2px;
+}
+
+/* Selection */
+::selection {
+  background-color: oklch(0.55 0.12 180 / 0.2);
+  color: var(--color-foreground);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: oklch(0.55 0.02 260 / 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.55 0.02 260 / 0.5);
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    background: white;
+    color: black;
+  }
+  
+  .fhir-narrative {
+    color: black;
+  }
+}
+
+/* Mobile-specific enhancements */
+@media (max-width: 640px) {
+  /* Better touch targets */
+  .touch-target {
+    min-height: 48px;
+    min-width: 48px;
+  }
+  
+  /* Safe area padding for notched devices */
+  .safe-area-inset {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Animation utilities */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s ease-out;
+}
+
+.animate-slide-down {
+  animation: slideDown 0.4s ease-out;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+/* Haptic-like feedback for buttons */
+@media (hover: none) {
+  button:active,
+  [role="button"]:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* Safe area utilities for Tailwind v4 - enables notch/home indicator handling */
+@utility pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+@utility pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+
+@utility pl-safe {
+  padding-left: env(safe-area-inset-left);
+}
+
+@utility pr-safe {
+  padding-right: env(safe-area-inset-right);
+}

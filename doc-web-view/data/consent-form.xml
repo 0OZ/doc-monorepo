@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle xmlns="http://hl7.org/fhir">
+  <id value="einwilligung-bundle"/>
+  <type value="document"/>
+  <timestamp value="2024-01-16T10:00:00Z"/>
+
+  <entry>
+    <resource>
+      <Composition xmlns="http://hl7.org/fhir">
+        <id value="composition-consent-001"/>
+        <status value="final"/>
+        <type>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="59284-0"/>
+            <display value="Einwilligungserklärung"/>
+          </coding>
+        </type>
+        <title value="Einwilligung zur Datenverarbeitung"/>
+        <date value="2024-01-16T10:00:00Z"/>
+        <confidentiality value="N"/>
+
+        <section>
+          <title value="Datenschutzhinweis"/>
+          <code>
+            <coding>
+              <system value="http://example.org/document-sections"/>
+              <code value="privacy-notice"/>
+              <display value="Datenschutzhinweis"/>
+            </coding>
+          </code>
+          <text>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p>Gemäß der Datenschutz-Grundverordnung (DSGVO) informieren wir Sie hiermit über die Verarbeitung Ihrer personenbezogenen Daten.</p>
+              <p><strong>Verantwortliche Stelle:</strong></p>
+              <p>Städtisches Klinikum München<br/>Klinikstraße 100<br/>80336 München</p>
+            </div>
+          </text>
+        </section>
+
+        <section>
+          <title value="Zweck der Datenverarbeitung"/>
+          <code>
+            <coding>
+              <system value="http://example.org/document-sections"/>
+              <code value="purpose"/>
+              <display value="Zweck"/>
+            </coding>
+          </code>
+          <text>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p>Ihre Daten werden zu folgenden Zwecken verarbeitet:</p>
+              <ul>
+                <li>Durchführung der medizinischen Behandlung</li>
+                <li>Dokumentation des Behandlungsverlaufs</li>
+                <li>Abrechnung mit Ihrer Krankenkasse</li>
+                <li>Qualitätssicherung und medizinische Forschung (anonymisiert)</li>
+              </ul>
+            </div>
+          </text>
+        </section>
+
+        <section>
+          <title value="Verarbeitete Daten"/>
+          <code>
+            <coding>
+              <system value="http://example.org/document-sections"/>
+              <code value="data-categories"/>
+              <display value="Datenkategorien"/>
+            </coding>
+          </code>
+          <text>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p><strong>Folgende Datenkategorien werden verarbeitet:</strong></p>
+              <ul>
+                <li>Persönliche Identifikationsdaten (Name, Geburtsdatum, Adresse)</li>
+                <li>Kontaktdaten (Telefon, E-Mail)</li>
+                <li>Versicherungsdaten</li>
+                <li>Medizinische Befunde und Diagnosen</li>
+                <li>Behandlungsdokumentation</li>
+                <li>Laborergebnisse und bildgebende Diagnostik</li>
+              </ul>
+            </div>
+          </text>
+        </section>
+
+        <section>
+          <title value="Widerrufsrecht"/>
+          <code>
+            <coding>
+              <system value="http://example.org/document-sections"/>
+              <code value="revocation"/>
+              <display value="Widerrufsrecht"/>
+            </coding>
+          </code>
+          <text>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p>Sie können diese Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen. Der Widerruf ist schriftlich an die oben genannte Adresse zu richten.</p>
+              <p><strong>Hinweis:</strong> Der Widerruf berührt nicht die Rechtmäßigkeit der bis dahin erfolgten Verarbeitung.</p>
+            </div>
+          </text>
+        </section>
+
+        <section>
+          <title value="Einwilligungserklärung"/>
+          <code>
+            <coding>
+              <system value="http://example.org/document-sections"/>
+              <code value="signature-section"/>
+              <display value="Unterschriftenabschnitt"/>
+            </coding>
+          </code>
+          <text>
+            <div xmlns="http://www.w3.org/1999/xhtml">
+              <p><strong>Hiermit erkläre ich mich einverstanden,</strong> dass meine personenbezogenen Daten zu den oben genannten Zwecken verarbeitet werden dürfen. Ich wurde über meine Rechte gemäß DSGVO informiert.</p>
+            </div>
+          </text>
+        </section>
+      </Composition>
+    </resource>
+  </entry>
+
+  <entry>
+    <resource>
+      <Patient xmlns="http://hl7.org/fhir">
+        <id value="patient-001"/>
+        <identifier>
+          <system value="http://krankenhaus.beispiel.de/patientennummer"/>
+          <value value="PAT-2024-78432"/>
+        </identifier>
+        <name>
+          <family value="Müller"/>
+          <given value="Maria"/>
+          <given value="Elena"/>
+        </name>
+        <gender value="female"/>
+        <birthDate value="1985-03-22"/>
+        <address>
+          <line value="Eichenweg 45, Wohnung 3B"/>
+          <city value="München"/>
+          <state value="Bayern"/>
+          <postalCode value="80331"/>
+        </address>
+      </Patient>
+    </resource>
+  </entry>
+
+  <entry>
+    <resource>
+      <Organization xmlns="http://hl7.org/fhir">
+        <id value="organization-001"/>
+        <name value="Städtisches Klinikum München"/>
+        <address>
+          <line value="Klinikstraße 100"/>
+          <city value="München"/>
+          <state value="Bayern"/>
+          <postalCode value="80336"/>
+        </address>
+      </Organization>
+    </resource>
+  </entry>
+</Bundle>
