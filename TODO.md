@@ -26,13 +26,39 @@
 - [x] Created `services/mock_data.rs` with sample Leistungsnachweise
 - [x] Mock mode returns sample client data without needing core server
 
-### 4. Signature Payload Fixed
+### 4. Authentication Implemented
+**Status**: DONE
+
+- [x] Backend JWT authentication with `jsonwebtoken` crate
+- [x] Created `config/auth.rs` with Claims, AuthUser extractor
+- [x] Created `handlers/auth.rs` with login, logout, refresh, me endpoints
+- [x] Auth middleware validates JWT tokens on protected routes
+- [x] Mock users for development: admin/admin123, staff/staff123, client/client123
+- [x] Frontend `lib/auth.ts` with login, logout, token management
+- [x] Frontend login page at `/login`
+- [x] API client includes auth headers automatically
+- [x] 401 responses trigger logout and redirect to login
+- [x] Environment variables: `JWT_SECRET`, `AUTH_DISABLED`
+
+### 5. Signature Payload Fixed
 **Status**: DONE
 
 - [x] Created `createSignRequest()` helper in `lib/api.ts`
 - [x] Strips `data:image/png;base64,` prefix automatically
 - [x] Maps to backend `SignLeistungsnachweisRequest` format
 - [x] Defaults to `handwritten_digital` signature type
+
+### 6. Device Auto-Authentication
+**Status**: DONE
+
+- [x] Backend device entity and repository (`repositories/entity/device.rs`, `repositories/device_repository.rs`)
+- [x] Device auth endpoint `POST /auth/device` - exchanges X-Device-Key header for JWT
+- [x] Device management endpoints (admin only): `/devices` CRUD operations
+- [x] Database migration for devices table (`migrations/001_create_devices.sql`)
+- [x] Next.js middleware for auto-auth via X-Device-Key header
+- [x] Frontend auth supports both localStorage (manual login) and httpOnly cookies (device auth)
+- [x] API keys are hashed with Argon2, shown once on device registration
+- [x] Devices can be activated/deactivated, API keys can be regenerated
 
 ---
 
@@ -42,20 +68,7 @@
 
 ## Medium Priority
 
-### 5. Authentication Missing
-**Status**: Placeholder only
-**Priority**: Medium
-
-- Backend has `auth_middleware` placeholder
-- Frontend has no auth implementation
-- No user context or session management
-
-**Tasks**:
-- [ ] Implement proper auth middleware in proxy
-- [ ] Add auth to frontend (login, session)
-- [ ] Pass auth headers from frontend to proxy
-
-### 6. Database Not Used
+### 7. Database Not Used
 **Status**: Connected but unused
 **Priority**: Medium
 
@@ -65,11 +78,11 @@ PostgreSQL is configured but the proxy currently:
 - Has repository structure but unused
 
 **Tasks**:
-- [ ] Decide what to persist locally (signatures? audit logs?)
-- [ ] Run migrations
-- [ ] Implement repository methods
+- [ ] Run device migration (`migrations/001_create_devices.sql`)
+- [ ] Decide what else to persist locally (signatures? audit logs?)
+- [ ] Implement additional repository methods
 
-### 7. Port Configuration
+### 8. Port Configuration
 **Status**: FIXED
 **Priority**: Low
 
@@ -81,16 +94,16 @@ PostgreSQL is configured but the proxy currently:
 
 ## Enhancement Ideas
 
-### 8. Offline Support
+### 9. Offline Support
 Consider PWA capabilities for mobile signature capture without network.
 
-### 9. PDF Preview
+### 10. PDF Preview
 Generate PDF preview of Leistungsnachweis before signing.
 
-### 10. Audit Trail
+### 11. Audit Trail
 Store signature events with timestamps, IP, device info.
 
-### 11. XML Validation
+### 12. XML Validation
 Validate generated XML against XSD schema before returning.
 
 ---
@@ -98,6 +111,6 @@ Validate generated XML against XSD schema before returning.
 ## Quick Wins
 
 1. ~~**Fix proxy port**: Update `main.rs` to bind to `0.0.0.0:3000` for Docker compatibility~~ DONE
-2. [ ] **Add health check to frontend**: `GET /api/health` endpoint
+2. ~~**Add health check to frontend**: `GET /api/health` endpoint~~ DONE
 3. ~~**Environment file**: Create `.env.example` with all required variables~~ DONE
-4. [ ] **CORS**: Verify CORS is properly configured for frontend origin
+4. ~~**CORS**: Configurable CORS via `CORS_PERMISSIVE` and `CORS_ALLOWED_ORIGINS`~~ DONE

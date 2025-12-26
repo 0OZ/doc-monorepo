@@ -1,7 +1,7 @@
 # Build stage
-FROM rust:1.83-alpine AS builder
+FROM rust:1.92-alpine AS builder
 
-RUN apk add --no-cache musl-dev
+RUN apk add --no-cache musl-dev pkgconfig openssl-dev openssl-libs-static
 
 WORKDIR /app
 
@@ -15,6 +15,7 @@ RUN rm -rf src
 
 # Copy source code
 COPY src ./src
+COPY .env ./.env
 
 # Build the application
 RUN touch src/main.rs && cargo build --release
@@ -22,7 +23,7 @@ RUN touch src/main.rs && cargo build --release
 # Runtime stage
 FROM alpine:3.21
 
-RUN apk add --no-cache ca-certificates
+RUN apk add --no-cache ca-certificates libgcc
 
 WORKDIR /app
 

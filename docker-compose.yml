@@ -14,6 +14,8 @@ services:
             interval: 5s
             timeout: 5s
             retries: 5
+        networks:
+            - shared_ng
 
     backend:
         build:
@@ -35,8 +37,7 @@ services:
             dockerfile: Dockerfile
         ports:
             - "127.0.0.1:31001:3000"
-        environment:
-            NEXT_PUBLIC_API_URL: http://backend:3000
+
         networks:
             - shared_ng
         depends_on:
